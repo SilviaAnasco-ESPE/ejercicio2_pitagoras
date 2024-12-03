@@ -34,7 +34,7 @@ class _CalcularDistanciaPageState extends State<CalcularDistanciaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Calcular Edad'),
+        title: const Text('Calcular Distancia entre dos puntos'),
       ),
       body: Center(
         child: Column(

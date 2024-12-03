@@ -1,7 +1,6 @@
 import 'package:ejercicio2_pitagoras_anasco/pages/pantalla_calcular_distancia.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../logica/calcular_distancia.dart';
 
 class IngresarDatosPage extends StatelessWidget {
 
@@ -34,7 +33,16 @@ final TextEditingController _y2Controller = TextEditingController();
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Punto 1"),
+                          Text("Punto 1",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white
+                            ),
+                          ),
+
+                          SizedBox(height: 5),
+
                           TextFormField(
                             controller: _x1Controller,
                             decoration: InputDecoration(
@@ -74,6 +82,9 @@ final TextEditingController _y2Controller = TextEditingController();
                                 color: Colors.white
                             ),
                           ),
+
+                          SizedBox(height: 5),
+
                           TextFormField(
                             controller: _x2Controller,
                             decoration: InputDecoration(
@@ -104,32 +115,31 @@ final TextEditingController _y2Controller = TextEditingController();
             ElevatedButton(
               onPressed: () {
 
-                int? x1 = int.parse(_x1Controller.text.trim()) ?? null;
-                int? y1 = int.parse(_y1Controller.text.trim()) ?? null;
-                int? x2 = int.parse(_x2Controller.text.trim()) ?? null;
-                int? y2 = int.parse(_y2Controller.text.trim()) ?? null;
+                try {
+                  int x1 = int.parse(_x1Controller.text.trim());
+                  int y1 = int.parse(_y1Controller.text.trim());
+                  int x2 = int.parse(_x2Controller.text.trim());
+                  int y2 = int.parse(_y2Controller.text.trim());
 
-
-                if (x1 != null && y1 != null && x2 != null && y2 != null)
-                {
-                  Navigator.push(context,
+                  // Si todo está bien, navegamos a la siguiente página
+                  Navigator.push(
+                    context,
                     MaterialPageRoute(
                       builder: (context) => CalcularDistanciaPage(
-                          x1: x1,
-                          y1: y1,
-                          x2: x2,
-                          y2: y2
+                        x1: x1,
+                        y1: y1,
+                        x2: x2,
+                        y2: y2,
                       ),
-
                     ),
                   );
-                } else {
+                } catch (e) {
+                  // Mostrar un mensaje de error si ocurre una excepción
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Por favor, ingrese datos válidos'),
+                      content: Text('Por favor, ingrese solo números enteros válidos'),
                       duration: Duration(seconds: 2),
                     ),
-
                   );
                 }
 
@@ -138,8 +148,9 @@ final TextEditingController _y2Controller = TextEditingController();
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                backgroundColor: const Color.fromARGB(255, 153, 82, 82),
+                backgroundColor: Colors.green,
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                foregroundColor: Colors.white
               ),
               child: Text('Guardar Datos'),
             ),
